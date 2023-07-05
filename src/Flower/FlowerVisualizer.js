@@ -5,7 +5,7 @@ export class FlowerVisualizer {
     this.ctx = ctx;
   }
   draw() {
-    const pixelHeight = window.innerHeight - this.data.stemHeight * 15;
+    const pixelHeight = window.innerHeight - (this.data.stemHeight * 30 + 100);
     this.ctx.translate(this.state.position, pixelHeight);
     this.drawStem(20,pixelHeight);
     this.drawPetals();
@@ -24,7 +24,7 @@ export class FlowerVisualizer {
   drawPetals() {
     var TO_RADIANS = Math.PI / 180;
     for (var j = 0; j < this.data.petalCount; j++) {
-      const isSelected =  j == this.state.currentStep;
+      const isSelected =  j == this.state.currentStep && this.state.isPlaying;
       const color = this.data.petalColor;
       const formattedColor = `#${color[0].toString(16)}${color[1].toString(
         16

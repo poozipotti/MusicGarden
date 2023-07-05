@@ -14,10 +14,19 @@ function init() {
       startCanvas();
       hasInit = true;
     } else {
-      flowers.forEach((flower)=>{
-        flower.destroy()
-      })
-      flowers = [new Flower(myContext, audioContext)];
+      flowers.forEach((flower) => {
+        flower.destroy();
+      });
+      flowers = [
+        new Flower(myContext, audioContext),
+        new Flower(myContext, audioContext),
+        new Flower(myContext, audioContext),
+        new Flower(myContext, audioContext),
+        new Flower(myContext, audioContext),
+        new Flower(myContext, audioContext),
+        new Flower(myContext, audioContext),
+        new Flower(myContext, audioContext),
+      ];
     }
   });
 }

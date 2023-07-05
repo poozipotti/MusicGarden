@@ -4,16 +4,17 @@ export class FlowerAudio {
     this.data = data;
     this.audioCtx = audioCtx;
     this.filter = new BiquadFilterNode(this.audioCtx, {
-      frequency: 800,
+      frequency: 400,
       q: 300,
     });
+    this.amount = Math.random() * .5;
   }
   destroy() {
     this.stopCurrentNote();
   }
   playCurrentNote() {
     const flowerNote = this.data.scale.getNoteAtScaleStep(this.data.stemHeight);
-    if (!this.state.isPlaying) {
+    if (!this.state.isPlaying && Math.random() < this.amount) {
       this.oscillator = new OscillatorNode(this.audioCtx, {
         type: "sawtooth",
         frequency: flowerNote.frequency,

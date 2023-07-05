@@ -67,3 +67,15 @@ export const MajorScale = (startingNote) => {
 export const OneNote = (startingNote) => {
   return new Scale([0], startingNote);
 };
+
+
+
+//C, D, Eb, G, Ab, C.
+export const Japanese = (startingNote) => {
+  return new Scale([0,2,3,7,8], startingNote);
+};
+
+//CDFG
+export const Fun = (startingNote) => {
+  return new Scale([0,2,5,7], startingNote);
+};

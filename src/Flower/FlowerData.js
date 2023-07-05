@@ -1,4 +1,4 @@
-import { MajorScale, Note } from "../scales.js";
+import * as Scales from "../scales.js";
 const WIDTH_CLAMP = [20, 120];
 const clamp = (num, [min, max]) => {
   if (num < min) return min;
@@ -43,7 +43,7 @@ export class FlowerData {
   static MergeFlowerData(flowerDataOne, flowerDataTwo) {}
   static RandomFlowerData() {
     return new FlowerData({
-      stemHeight: Math.floor(Math.random() * 24),
+      stemHeight: Math.floor(Math.random() * 30),
       petalCurve: Math.random() * 1,
       petalWidth: clamp(Math.random() * 200, WIDTH_CLAMP),
       petalHeight: Math.random() * 200 + 100,
@@ -52,9 +52,9 @@ export class FlowerData {
         Math.floor(Math.random() * 255),
         Math.floor(Math.random() * 255),
       ],
-      petalCount: [2, 4, 8, 16][Math.floor(Math.random() * 4)],
+      petalCount: [2,3, 4,5,6, 8, 16,][Math.floor(Math.random() * 4)],
       headScalePattern: [0],
-      scale: MajorScale(new Note("c", -2)),
+      scale: Scales.Fun(new Scales.Note("c", -2)),
     });
   }
 }
