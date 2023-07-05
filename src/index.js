@@ -21,11 +21,6 @@ function init() {
         new Flower(myContext, audioContext),
         new Flower(myContext, audioContext),
         new Flower(myContext, audioContext),
-        new Flower(myContext, audioContext),
-        new Flower(myContext, audioContext),
-        new Flower(myContext, audioContext),
-        new Flower(myContext, audioContext),
-        new Flower(myContext, audioContext),
       ];
     }
   });

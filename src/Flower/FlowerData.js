@@ -52,9 +52,9 @@ export class FlowerData {
         Math.floor(Math.random() * 255),
         Math.floor(Math.random() * 255),
       ],
-      petalCount: [2,3, 4,5,6, 8, 16,][Math.floor(Math.random() * 4)],
+      petalCount: [2, 4, 8, 16][Math.floor(Math.random() * 4)],
       headScalePattern: [0],
-      scale: Scales.Fun(new Scales.Note("c", -2)),
+      scale: Scales.Fun(new Scales.Note("f", -3)),
     });
   }
 }

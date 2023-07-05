@@ -7,7 +7,7 @@ export class FlowerAudio {
       frequency: 400,
       q: 300,
     });
-    this.amount = Math.random() * .5;
+    this.amount = Math.random() < 0.5 ? 0.5 : 1;
   }
   destroy() {
     this.stopCurrentNote();
