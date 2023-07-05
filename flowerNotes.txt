@@ -1,0 +1,23 @@
+flower -> audio
+[stem = oscilattor]
+stem height: <OscilattorNode.frequency> (starting note/octave)
+[petals = filter]
+leaf type: 
+leaf height: 
+
+[petals = notes]
+petal curve: filter  envelope 
+petal height: filter  envelope  
+petal width:  filter  envelope 
+petal color: <OscilattorNode.type>[sine,square,sawtooth,triangle]
+    - we use the 3 colors RGB to mix three wave types in the channels
+        ex: purely blue would be square (00,00,255)
+            aqua would be (00,100,255) a mix of square && sawtooth with full volume 
+            square and some volume sawtooth (assuming green is sawtooth and blue is square)
+petal count[]: note repitition
+
+
+[head = note change/arp/scale]
+head color: scale (need to be made up)
+head pattern: arp 
+
