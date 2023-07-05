@@ -38,9 +38,9 @@ export class FlowerData {
   static RandomFlowerData() {
     return new FlowerData({
       stemHeight: Math.floor(Math.random() * 24),
-      petalCurve: Math.random() * 2,
-      petalWidth: Math.random() * 200 + 100,
-      petalHeight: Math.random() * 200 + 400,
+      petalCurve: Math.random() * 1,
+      petalWidth: Math.random() * 100 + 20,
+      petalHeight: Math.random() * 200 + 100,
       petalColor: [Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255)],
       petalCount: [2, 4, 8, 16][Math.floor(Math.random() * 4)],
       headScalePattern: [0],

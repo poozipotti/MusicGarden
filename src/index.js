@@ -17,36 +17,44 @@ function startCanvas() {
   setCanvasToWindowSize();
   window.onresize = function (_e) {
     setCanvasToWindowSize();
-    updateCanvas();
   };
 
-  main(myContext);
-  window.setInterval(() => {
-    main(myContext);
-  }, 500);
-}
-function main(ctx) {
-  draw(ctx);
-  update();
-}
-function update() {
-  /**
-   * currently a noop
-   *
-   * */
-}
+  const BPM = 120;
 
-function draw(ctx) {
-  clearCanvas(ctx)
+  //milliseconds per beat
+  const MSPB = 60000 / BPM;
+  window.setInterval(() => {
+    beatUpdate(myContext);
+  }, MSPB/16); // we want to run the beat loop on 16 notes
+
+  //state update //
+  window.setInterval(() => {
+    stateUpdate();
+  }, 16);
+  window.setInterval(() => {
+    draw(myContext);
+  }, 16);
+  draw(myContext)
+}
+function beatUpdate() {
+  //plays audio based on state
   flowers.forEach((flower) => {
-    flower.visualizer.draw()
+    flower.beatUpdate();
+  });
+}
+function stateUpdate() {
+  //uses deltas to calculate stateupdates
+}
+function draw(ctx) {
+  clearCanvas(ctx);
+  flowers.forEach((flower) => {
+    flower.visualizer.draw();
   });
 }
 function clearCanvas(ctx) {
   var primaryColor = "#000000";
   ctx.fillStyle = primaryColor;
   ctx.fillRect(0, 0, flowerCanvas.width, flowerCanvas.height);
-
 }
 
 function setCanvasToWindowSize() {
