@@ -19,7 +19,7 @@ export class Flower {
     }
     if (
       this.state.receivedBeats ===
-      Math.floor(FLOWER_BEATS / this.data.petalCount) - 4
+      Math.floor(FLOWER_BEATS / this.data.petalCount) - 2
     ) {
       this.audio.stopCurrentNote();
     }
@@ -28,7 +28,6 @@ export class Flower {
       this.state.receivedBeats ===
       Math.floor(FLOWER_BEATS / this.data.petalCount)
     ) {
-      console.log("play");
       this.state.receivedBeats = 0;
       this.state.currentStep =
         (this.state.currentStep + 1) % this.data.petalCount;

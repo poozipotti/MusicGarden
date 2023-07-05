@@ -12,12 +12,11 @@ export class FlowerAudio {
     this.stopCurrentNote();
   }
   playCurrentNote() {
+    const flowerNote = this.data.scale.getNoteAtScaleStep(this.data.stemHeight);
     if (!this.state.isPlaying) {
       this.oscillator = new OscillatorNode(this.audioCtx, {
         type: "sawtooth",
-        frequency:
-          this.data.scale.getNoteAtScaleStep(this.data.stemHeight).frequency /
-          4,
+        frequency: flowerNote.frequency,
       });
       this.oscillator.connect(this.filter).connect(this.audioCtx.destination);
       this.oscillator.start();

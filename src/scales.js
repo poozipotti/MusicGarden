@@ -1,4 +1,4 @@
-class Note {
+export class Note {
   /*starting at c4*/
   static frequencyLookup = {
     c: 261.63,
@@ -32,17 +32,24 @@ class Note {
 }
 class Scale {
   constructor(steps, startingNote) {
-    (this.steps = steps), (this.startingNote = startingNote);
+    this.steps = steps;
+    this.startingNote = startingNote;
+    if (!startingNote.note || !startingNote.frequency || !startingNote.octave) {
+      throw new Error(
+        "Make sure to pass a note object to the scale constructor"
+      );
+    }
   }
   getNoteAtScaleStep(step) {
-    const octave = Math.floor(step / this.steps.length);
+    const octave =
+      Math.floor(step / this.steps.length) + this.startingNote.octave;
     const halfSteps = this.steps[step % this.steps.length];
 
-    const noteLocation =
-      (Object.keys(Note.frequencyLookup).indexOf(this.startingNote.note) +
-        halfSteps) %
-      12;
-    const note = Object.entries(Note.frequencyLookup)[noteLocation] || 'c';
+    const startingIndex = Object.keys(Note.frequencyLookup).indexOf(
+      this.startingNote.note
+    );
+    const noteLocation = (startingIndex + halfSteps) % 12;
+    const [note] = Object.entries(Note.frequencyLookup)[noteLocation];
     if (!note) {
       throw new Error(
         `could not get note ${this.startingNote} in ${Object.keys(
@@ -50,7 +57,8 @@ class Scale {
         )}`
       );
     }
-    return new Note(note[0], octave);
+    console.log(note, octave);
+    return new Note(note, octave);
   }
 }
 export const MajorScale = (startingNote) => {

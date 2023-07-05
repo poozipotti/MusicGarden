@@ -1,9 +1,9 @@
-import { MajorScale, OneNote } from "../scales.js";
-const WIDTH_CLAMP = [20,120] 
-const clamp =(num,[min,max])=>{
-  if(num<min) return min
-  if(num>max) return max
-  return num
+import { MajorScale, Note } from "../scales.js";
+const WIDTH_CLAMP = [20, 120];
+const clamp = (num, [min, max]) => {
+  if (num < min) return min;
+  if (num > max) return max;
+  return num;
 };
 export class FlowerData {
   constructor({
@@ -45,12 +45,16 @@ export class FlowerData {
     return new FlowerData({
       stemHeight: Math.floor(Math.random() * 24),
       petalCurve: Math.random() * 1,
-      petalWidth: clamp(Math.random() * 200,WIDTH_CLAMP),
+      petalWidth: clamp(Math.random() * 200, WIDTH_CLAMP),
       petalHeight: Math.random() * 200 + 100,
-      petalColor: [Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255)],
+      petalColor: [
+        Math.floor(Math.random() * 255),
+        Math.floor(Math.random() * 255),
+        Math.floor(Math.random() * 255),
+      ],
       petalCount: [2, 4, 8, 16][Math.floor(Math.random() * 4)],
       headScalePattern: [0],
-      scale: MajorScale("c"),
+      scale: MajorScale(new Note("c", -2)),
     });
   }
 }

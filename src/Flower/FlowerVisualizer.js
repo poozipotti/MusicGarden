@@ -5,7 +5,7 @@ export class FlowerVisualizer {
     this.ctx = ctx;
   }
   draw() {
-    const pixelHeight = this.data.stemHeight * 15 + 200;
+    const pixelHeight = window.innerHeight - this.data.stemHeight * 15;
     this.ctx.translate(this.state.position, pixelHeight);
     this.drawStem(20,pixelHeight);
     this.drawPetals();
