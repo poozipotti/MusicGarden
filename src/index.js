@@ -23,7 +23,7 @@ function startCanvas() {
   main(myContext);
   window.setInterval(() => {
     main(myContext);
-  }, 1000);
+  }, 500);
 }
 function main(ctx) {
   draw(ctx);
@@ -37,7 +37,7 @@ function update() {
 }
 
 function draw(ctx) {
-  const flowerCanvas = document.getElementById("flowerCanvas");
+  clearCanvas(ctx)
   flowers.forEach((flower) => {
     flower.visualizer.draw()
   });
