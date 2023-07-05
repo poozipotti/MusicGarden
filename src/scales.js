@@ -17,9 +17,12 @@ class Note {
   constructor(note, octave) {
     this.note = note;
     this.octave = octave;
-    const baseFrequency = this.frequencyLookup[note];
-    if (!this.baseFrequency) {
-      throw new Error("that note does not exist, only sharps are accepted");
+    const baseFrequency = Note.frequencyLookup[note.toLowerCase()];
+
+    if (!baseFrequency) {
+      throw new Error(
+        `that note (${note}) does not exist, only sharps are accepted`
+      );
     }
     this.frequency = baseFrequency * Math.pow(2, octave);
   }
@@ -33,16 +36,26 @@ class Scale {
   }
   getNoteAtScaleStep(step) {
     const octave = Math.floor(step / this.steps.length);
-    const halfSteps = steps[step % this.steps.length];
+    const halfSteps = this.steps[step % this.steps.length];
 
     const noteLocation =
       (Object.keys(Note.frequencyLookup).indexOf(this.startingNote.note) +
         halfSteps) %
       12;
-    const [note] = Object.entries(Note.frequencyLookup)[noteLocation];
-    return new Note(note, octave);
+    const note = Object.entries(Note.frequencyLookup)[noteLocation] || 'c';
+    if (!note) {
+      throw new Error(
+        `could not get note ${this.startingNote} in ${Object.keys(
+          Note.frequencyLookup
+        )}`
+      );
+    }
+    return new Note(note[0], octave);
   }
 }
 export const MajorScale = (startingNote) => {
   return new Scale([0, 2, 4, 5, 7, 9, 11], startingNote);
+};
+export const OneNote = (startingNote) => {
+  return new Scale([0], startingNote);
 };

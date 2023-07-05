@@ -1,19 +1,39 @@
 import { Flower } from "./Flower/index.js";
-const flowers = [];
+let flowers = [];
+let hasInit = false;
+let myContext;
+let audioContext;
+
 window.onload = function () {
-  console.log("started");
-  startCanvas();
+  init();
 };
+function init() {
+  const listener = (window.onclick = () => {
+    console.log("clicked");
+    if (!hasInit) {
+      startCanvas();
+      hasInit = true;
+    } else {
+      flowers.forEach((flower)=>{
+        flower.destroy()
+      })
+      flowers = [new Flower(myContext, audioContext)];
+    }
+  });
+}
+
 function startCanvas() {
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  audioContext = new AudioContext();
   const flowerCanvas = document.getElementById("flowerCanvas");
   if (!flowerCanvas) {
     throw new Error("could not find flower Canvas");
   }
-  const myContext = flowerCanvas.getContext("2d");
+  myContext = flowerCanvas.getContext("2d");
   if (!flowerCanvas) {
     throw new Error("could not get context");
   }
-  flowers.push(new Flower(myContext));
+  flowers.push(new Flower(myContext, audioContext));
   setCanvasToWindowSize();
   window.onresize = function (_e) {
     setCanvasToWindowSize();
@@ -25,7 +45,7 @@ function startCanvas() {
   const MSPB = 60000 / BPM;
   window.setInterval(() => {
     beatUpdate(myContext);
-  }, MSPB/16); // we want to run the beat loop on 16 notes
+  }, MSPB / 16); // we want to run the beat loop on 16 notes
 
   //state update //
   window.setInterval(() => {
@@ -34,7 +54,7 @@ function startCanvas() {
   window.setInterval(() => {
     draw(myContext);
   }, 16);
-  draw(myContext)
+  draw(myContext);
 }
 function beatUpdate() {
   //plays audio based on state

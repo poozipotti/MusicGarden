@@ -1,22 +1,40 @@
 import { FlowerData } from "./FlowerData.js";
 import { FlowerVisualizer } from "./FlowerVisualizer";
 import { FlowerStateData } from "./FlowerStateData.js";
+import { FlowerAudio } from "./FlowerAudio.js";
 
 //how many BEATS are in a flower before it resets?
 const FLOWER_BEATS = 16 * 4; //four bars
 
 export class Flower {
-  constructor(ctx) {
+  constructor(ctx, audioCtx) {
     this.state = new FlowerStateData({ position: 500 });
     this.data = FlowerData.RandomFlowerData();
     this.visualizer = new FlowerVisualizer(ctx, this.data, this.state);
+    this.audio = new FlowerAudio(audioCtx, this.data, this.state);
   }
   beatUpdate() {
+    if (this.state.receivedBeats === 0) {
+      this.audio.playCurrentNote();
+    }
+    if (
+      this.state.receivedBeats ===
+      Math.floor(FLOWER_BEATS / this.data.petalCount) - 4
+    ) {
+      this.audio.stopCurrentNote();
+    }
     this.state.receivedBeats += 1;
-    if (this.state.receivedBeats === FLOWER_BEATS / this.data.petalCount) {
+    if (
+      this.state.receivedBeats ===
+      Math.floor(FLOWER_BEATS / this.data.petalCount)
+    ) {
+      console.log("play");
       this.state.receivedBeats = 0;
       this.state.currentStep =
         (this.state.currentStep + 1) % this.data.petalCount;
     }
+  }
+  destroy() {
+    this.audio.destroy();
   }
 }
