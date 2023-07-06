@@ -19,9 +19,9 @@ export class FlowerRenderer {
   addFlower(canOverwrite = true) {
     console.log(AudioRenderer.AudioContext)
     const tempFlower = new Flower(this.canvasContext, AudioRenderer.AudioContext);
-    const MAX_SIMILIAR_FLOWERS_LOWS = 1;
+    const MAX_SIMILIAR_FLOWERS_LOWS = 2;
     const MAX_SIMILIAR_FLOWERS_HIGHS = 3;
-    const BUCKETS = 4;
+    const BUCKETS = 8;
     const flowerBucket = tempFlower.data.stemHeight % BUCKETS;
     if (!this.flowers[flowerBucket]) {
       this.flowers[flowerBucket] = [tempFlower];

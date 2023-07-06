@@ -6,7 +6,7 @@ export class FlowerVisualizer {
     this.ctx = ctx;
   }
   draw() {
-    const pixelHeight = window.innerHeight - (this.data.stemHeight * 70 + 100);
+    const pixelHeight = window.innerHeight - (this.data.stemHeight * 40 + 100);
     const pixelOffset =
       window.innerWidth / 2 + (this.data.panning * window.innerWidth) / 2;
     this.ctx.translate(pixelOffset, pixelHeight);
