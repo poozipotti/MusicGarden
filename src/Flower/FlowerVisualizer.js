@@ -6,12 +6,15 @@ export class FlowerVisualizer {
     this.ctx = ctx;
   }
   draw() {
-    const pixelHeight = window.innerHeight - (this.data.stemHeight * 30 + 100);
-    this.ctx.translate(this.state.position, pixelHeight);
+    const pixelHeight = window.innerHeight - (this.data.stemHeight * 70 + 100);
+    const pixelOffset =
+      window.innerWidth / 2 + (this.data.panning * window.innerWidth) / 2;
+    console.log(this.data.panning)
+    this.ctx.translate(pixelOffset, pixelHeight);
     this.drawStem(10, pixelHeight);
     this.drawHead();
     this.drawPetals();
-    this.ctx.translate(-1 * this.state.position, -1 * pixelHeight);
+    this.ctx.translate(-1 * pixelOffset, -1 * pixelHeight);
   }
   drawStem(stemWidth, flowerHeight) {
     this.ctx.fillStyle = "#73ba8d";
@@ -38,7 +41,6 @@ export class FlowerVisualizer {
       this.ctx.fillStyle = petalColor;
       this.ctx.beginPath();
       this.ctx.moveTo(0, 0);
-      console.log({wave:this.data.waveType})
       if (WAVE_TYPES[1] == this.data.waveType) {
         this.ctx.bezierCurveTo(
           this.data.petalCurve * this.data.petalHeight,

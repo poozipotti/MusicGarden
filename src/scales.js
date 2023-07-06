@@ -81,3 +81,8 @@ export const Fun = (startingNote) => {
 export const Triad = (startingNote) => {
   return new Scale([0,4,7], startingNote);
 };
+export const Lydian = (startingNote) => {
+  return new Scale([0, 2, 4, 6, 7, 9, 11], startingNote);
+};
+
+

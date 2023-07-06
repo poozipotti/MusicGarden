@@ -19,6 +19,9 @@ export class FlowerAudio {
         frequency: 200,
         Q: 1,
       });
+      this.panning = new StereoPannerNode(this.audioCtx, {
+        pan: this.data.panning
+      })
       const speed =
         this.data.petalCount < 16
           ? Math.floor(this.data.petalWidth / 10)

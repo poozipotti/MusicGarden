@@ -106,6 +106,7 @@ function beatUpdate() {
   getFlowers().forEach((flower) => {
     flower.beatUpdate();
   });
+
 }
 function stateUpdate() {
   //uses deltas to calculate stateupdates

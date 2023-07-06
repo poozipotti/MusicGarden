@@ -4,7 +4,7 @@ import { FlowerStateData } from "./FlowerStateData.js";
 import { FlowerAudio } from "./FlowerAudio.js";
 
 //how many BEATS are in a flower before it resets?
-const FLOWER_BEATS = 16 * 4; //four bars
+const FLOWER_BEATS = 16 * 8; //four bars
 
 export class Flower {
   constructor(ctx, audioCtx) {
