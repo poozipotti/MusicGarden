@@ -1,8 +1,7 @@
 export class FlowerStateData {
-  constructor({ currentStep, position }) {
+  constructor({ currentStep}) {
     this.currentStep = currentStep || 0;
     this.receivedBeats = 0;
-    this.position = position || 0;
     this.isPlaying = false;
   }
   reset() {

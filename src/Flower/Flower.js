@@ -8,9 +8,7 @@ const FLOWER_BEATS = 16 * 8; //four bars
 
 export class Flower {
   constructor(ctx, audioCtx) {
-    this.state = new FlowerStateData({
-      position: 500 + Math.random() * 400 - Math.random() * 400,
-    });
+    this.state = new FlowerStateData();
     this.data = FlowerData.RandomFlowerData();
     this.visualizer = new FlowerVisualizer(ctx, this.data, this.state);
     this.audio = new FlowerAudio(audioCtx, this.data, this.state);

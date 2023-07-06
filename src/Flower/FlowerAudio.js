@@ -17,7 +17,7 @@ export class FlowerAudio {
       });
       this.filter = new BiquadFilterNode(this.audioCtx, {
         frequency: 200,
-        Q: 1,
+        Q: 0,
       });
       this.panning = new StereoPannerNode(this.audioCtx, {
         pan: this.data.panning
@@ -27,7 +27,7 @@ export class FlowerAudio {
           ? Math.floor(this.data.petalWidth / 10)
           : Math.floor(Math.random() * 4);
       this.filter.frequency.setTargetAtTime(
-        1000,
+        400,
         this.audioCtx.currentTime,
         speed
       );

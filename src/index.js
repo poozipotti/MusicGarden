@@ -1,8 +1,5 @@
-import { Flower } from "./Flower/index.js";
-let flowers = {};
-let hasInit = false;
-let canvasCtx;
-let audioContext;
+import { FlowerRenderer } from "./Rendering/FlowerRenderer";
+let flowerRenderer;
 
 window.onload = function () {
   init();
@@ -10,117 +7,26 @@ window.onload = function () {
 function init() {
   const listener = (window.onclick = () => {
     console.log("clicked");
-    if (!hasInit) {
+    if (!flowerRenderer) {
       startCanvas();
       hasInit = true;
     } else {
-      resetFlowers();
+      flowerRenderer.resetFlowers();
       const count = Math.floor(Math.random() * 5) + 1;
       for (let i = 0; i <= count; i++) {
-        addFlower(true);
+        flowerRenderer.addFlower(true);
       }
     }
   });
 }
-function addFlower(canOverwrite = true) {
-  const tempFlower = new Flower(canvasCtx, audioContext);
-  const MAX_SIMILIAR_FLOWERS_LOWS = 1;
-  const MAX_SIMILIAR_FLOWERS_HIGHS = 3;
-  const BUCKETS = 4;
-  const flowerBucket = tempFlower.data.stemHeight % BUCKETS;
-  if (!flowers[flowerBucket]) {
-    flowers[flowerBucket] = [tempFlower];
-    return;
-  }
-  if (
-    flowers[flowerBucket].length >=
-    (flowerBucket < BUCKETS / 2
-      ? MAX_SIMILIAR_FLOWERS_LOWS
-      : MAX_SIMILIAR_FLOWERS_HIGHS)
-  ) {
-    if (canOverwrite) {
-      flowers[flowerBucket].splice(0, 1);
-    } else {
-      console.warn("flower not added too many similiar notes");
-      return;
-    }
-  }
-  flowers[flowerBucket].push(tempFlower);
-}
-function getFlowers() {
-  return Object.values(flowers).reduce(
-    (allFLowers, flowerBucket) => [...allFLowers, ...flowerBucket],
-    []
-  );
-}
-
-function resetFlowers() {
-  getFlowers().forEach((flower) => {
-    flower.destroy();
-  });
-  flowers = {};
-}
 
 function startCanvas() {
-  const AudioContext = window.AudioContext || window.webkitAudioContext;
-  audioContext = new AudioContext();
-  const flowerCanvas = document.getElementById("flowerCanvas");
-  if (!flowerCanvas) {
-    throw new Error("could not find flower Canvas");
-  }
-  canvasCtx = flowerCanvas.getContext("2d");
-  if (!flowerCanvas) {
-    throw new Error("could not get context");
-  }
-  addFlower();
+  flowerRenderer = new FlowerRenderer();
+  flowerRenderer.addFlower();
   setCanvasToWindowSize();
   window.onresize = function (_e) {
     setCanvasToWindowSize();
   };
-
-  const BPM = 120;
-
-  //milliseconds per beat
-  const MSPB = 60000 / BPM;
-  window.setInterval(() => {
-    beatUpdate(canvasCtx);
-  }, MSPB / 16); // we want to run the beat loop on 16 notes
-
-  //state update //
-  window.setInterval(() => {
-    stateUpdate();
-  }, 16);
-  window.setInterval(() => {
-    draw(canvasCtx);
-  }, 16);
-  draw(canvasCtx);
-}
-let count = 0;
-function beatUpdate() {
-  count++;
-  if (count == 32) {
-    count = 0;
-  }
-
-  //plays audio based on state
-  getFlowers().forEach((flower) => {
-    flower.beatUpdate();
-  });
-
-}
-function stateUpdate() {
-  //uses deltas to calculate stateupdates
-}
-function draw(ctx) {
-  clearCanvas(ctx);
-  getFlowers().forEach((flower) => {
-    flower.visualizer.draw();
-  });
-}
-function clearCanvas(ctx) {
-  var primaryColor = "#dde0cc";
-  ctx.fillStyle = primaryColor;
-  ctx.fillRect(0, 0, flowerCanvas.width, flowerCanvas.height);
 }
 
 function setCanvasToWindowSize() {
