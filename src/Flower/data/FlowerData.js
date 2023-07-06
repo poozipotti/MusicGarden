@@ -63,7 +63,10 @@ export class FlowerData {
         ],
       headScalePattern: [0] /*unusued for now*/,
       scale: constants.SCALES[0],
-      petalOffset: Math.floor(Math.random() * constants.PETAL_OFFSET_MINMAX[1]),
+      petalOffset:
+        constants.PETAL_OFFSETS[
+          Math.floor(Math.random() * constants.PETAL_OFFSETS.length)
+        ],
       waveType:
         constants.WAVE_TYPES[
           Math.floor(constants.WAVE_TYPES.length * Math.random())
