@@ -1,3 +1,5 @@
+import { AudioRenderer } from "../Rendering/AudioRenderer";
+
 export class FlowerAudio {
   constructor(audioCtx, data, state) {
     this.state = state;
@@ -20,8 +22,8 @@ export class FlowerAudio {
         Q: 0,
       });
       this.panning = new StereoPannerNode(this.audioCtx, {
-        pan: this.data.panning
-      })
+        pan: this.data.panning * -1,
+      });
       const speed =
         this.data.petalCount < 16
           ? Math.floor(this.data.petalWidth / 10)
@@ -31,7 +33,10 @@ export class FlowerAudio {
         this.audioCtx.currentTime,
         speed
       );
-      this.oscillator.connect(this.filter).connect(this.audioCtx.destination);
+      this.oscillator
+        .connect(this.filter)
+        .connect(this.panning)
+        .connect(AudioRenderer.masterCompressor);
       this.oscillator.start();
       this.state.isPlaying = true;
     }

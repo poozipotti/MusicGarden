@@ -4,8 +4,6 @@ import { VisualRenderer } from "./VisualRenderer";
 export class FlowerRenderer {
   constructor() {
     this.flowers = {};
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    this.audioContext = new AudioContext();
     const flowerCanvas = document.getElementById("flowerCanvas");
     this.canvasContext = flowerCanvas.getContext("2d");
     this.audioRenderer = new AudioRenderer();
@@ -19,7 +17,8 @@ export class FlowerRenderer {
     this.visualRenderer.render(this.getFlowers());
   }
   addFlower(canOverwrite = true) {
-    const tempFlower = new Flower(this.canvasContext, this.audioContext);
+    console.log(AudioRenderer.AudioContext)
+    const tempFlower = new Flower(this.canvasContext, AudioRenderer.AudioContext);
     const MAX_SIMILIAR_FLOWERS_LOWS = 1;
     const MAX_SIMILIAR_FLOWERS_HIGHS = 3;
     const BUCKETS = 4;
