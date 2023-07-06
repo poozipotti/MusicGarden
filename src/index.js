@@ -24,14 +24,20 @@ function init() {
 }
 function addFlower(canOverwrite = true) {
   const tempFlower = new Flower(canvasCtx, audioContext);
-  const MAX_SIMILIAR_FLOWERS = 1;
-  const BUCKETS = 6;
+  const MAX_SIMILIAR_FLOWERS_LOWS = 1;
+  const MAX_SIMILIAR_FLOWERS_HIGHS = 3;
+  const BUCKETS = 4;
   const flowerBucket = tempFlower.data.stemHeight % BUCKETS;
   if (!flowers[flowerBucket]) {
     flowers[flowerBucket] = [tempFlower];
     return;
   }
-  if (flowers[flowerBucket].length >= MAX_SIMILIAR_FLOWERS) {
+  if (
+    flowers[flowerBucket].length >=
+    (flowerBucket < BUCKETS / 2
+      ? MAX_SIMILIAR_FLOWERS_LOWS
+      : MAX_SIMILIAR_FLOWERS_HIGHS)
+  ) {
     if (canOverwrite) {
       flowers[flowerBucket].splice(0, 1);
     } else {
@@ -40,7 +46,6 @@ function addFlower(canOverwrite = true) {
     }
   }
   flowers[flowerBucket].push(tempFlower);
-  console.log(flowers)
 }
 function getFlowers() {
   return Object.values(flowers).reduce(
@@ -55,7 +60,6 @@ function resetFlowers() {
   });
   flowers = {};
 }
-
 
 function startCanvas() {
   const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -113,7 +117,7 @@ function draw(ctx) {
   });
 }
 function clearCanvas(ctx) {
-  var primaryColor = "#d8ddeb";
+  var primaryColor = "#dde0cc";
   ctx.fillStyle = primaryColor;
   ctx.fillRect(0, 0, flowerCanvas.width, flowerCanvas.height);
 }

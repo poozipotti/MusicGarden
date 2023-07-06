@@ -1,4 +1,4 @@
-import { PETAL_OFFSET_CLAMP } from "./FlowerData";
+import { PETAL_OFFSET_CLAMP, WAVE_TYPES } from "./FlowerData";
 export class FlowerVisualizer {
   constructor(ctx, data, state) {
     this.state = state;
@@ -38,19 +38,40 @@ export class FlowerVisualizer {
       this.ctx.fillStyle = petalColor;
       this.ctx.beginPath();
       this.ctx.moveTo(0, 0);
-      this.ctx.quadraticCurveTo(
-        this.data.petalCurve * this.data.petalHeight,
-        this.data.petalWidth,
-        this.data.petalHeight,
-        0
-      );
-      this.ctx.moveTo(0, 0);
-      this.ctx.quadraticCurveTo(
-        this.data.petalCurve * this.data.petalHeight,
-        -1 * this.data.petalWidth,
-        this.data.petalHeight,
-        0
-      );
+      console.log({wave:this.data.waveType})
+      if (WAVE_TYPES[1] == this.data.waveType) {
+        this.ctx.bezierCurveTo(
+          this.data.petalCurve * this.data.petalHeight,
+          this.data.petalWidth,
+          this.data.petalCurve * this.data.petalHeight,
+          this.data.petalWidth,
+          this.data.petalHeight,
+          0
+        );
+        this.ctx.moveTo(0, 0);
+        this.ctx.bezierCurveTo(
+          this.data.petalCurve * this.data.petalHeight,
+          -1 * this.data.petalWidth,
+          this.data.petalCurve * this.data.petalHeight,
+          this.data.petalWidth,
+          this.data.petalHeight,
+          0
+        );
+      } else {
+        this.ctx.quadraticCurveTo(
+          this.data.petalCurve * this.data.petalHeight,
+          this.data.petalWidth,
+          this.data.petalHeight,
+          0
+        );
+        this.ctx.moveTo(0, 0);
+        this.ctx.quadraticCurveTo(
+          this.data.petalCurve * this.data.petalHeight,
+          -1 * this.data.petalWidth,
+          this.data.petalHeight,
+          0
+        );
+      }
       this.ctx.fill();
       this.ctx.rotate(TO_RADIANS * (360 / this.data.petalCount));
     }

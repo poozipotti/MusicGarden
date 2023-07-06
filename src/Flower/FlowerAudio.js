@@ -12,7 +12,7 @@ export class FlowerAudio {
     const flowerNote = this.data.scale.getNoteAtScaleStep(this.data.stemHeight);
     if (!this.state.isPlaying && Math.random() < this.amount) {
       this.oscillator = new OscillatorNode(this.audioCtx, {
-        type: "sawtooth",
+        type: this.data.waveType,
         frequency: flowerNote.frequency,
       });
       this.filter = new BiquadFilterNode(this.audioCtx, {

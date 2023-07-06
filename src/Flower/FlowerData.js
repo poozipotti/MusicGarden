@@ -2,6 +2,7 @@ import * as Scales from "../scales.js";
 export const WIDTH_CLAMP = [10, 90];
 export const PETAL_OFFSET_CLAMP = [0, 16];
 export const STEM_CLAMP = [0, 12];
+export const WAVE_TYPES = ["square", "sawtooth"];
 const clamp = (num, [min, max]) => {
   if (num < min) return min;
   if (num > max) return max;
@@ -18,6 +19,7 @@ export class FlowerData {
     headScalePattern,
     scale,
     petalOffset,
+    waveType,
   }) {
     /*
      * given in step of scale ie. in a chromatic scale 0 would be <note>4
@@ -31,6 +33,7 @@ export class FlowerData {
     this.petalColor = petalColor;
     this.petalCount = petalCount;
     this.petalOffset = petalOffset;
+    this.waveType = waveType;
 
     /*
      * array sequence ie [[0,+3,+4],[0],[0]] for a chord and two notes
@@ -46,10 +49,11 @@ export class FlowerData {
   static getSerialization() {}
   static MergeFlowerData(flowerDataOne, flowerDataTwo) {}
   static RandomFlowerData() {
+    console.log(WAVE_TYPES);
     return new FlowerData({
       stemHeight: clamp(Math.floor(Math.random() * STEM_CLAMP[1]), STEM_CLAMP),
       petalCurve: Math.random() * 1,
-      petalWidth: clamp(Math.random() * WIDTH_CLAMP[1]+20, WIDTH_CLAMP),
+      petalWidth: clamp(Math.random() * WIDTH_CLAMP[1] + 20, WIDTH_CLAMP),
       petalHeight: Math.random() * 200 + 100,
       petalColor: [
         Math.floor(Math.random() * 255),
@@ -60,6 +64,7 @@ export class FlowerData {
       headScalePattern: [0],
       scale: Scales.Triad(new Scales.Note("f", -1)),
       petalOffset: clamp(Math.random() * 17, PETAL_OFFSET_CLAMP),
+      waveType: WAVE_TYPES[Math.floor(WAVE_TYPES.length * Math.random())],
     });
   }
 }
