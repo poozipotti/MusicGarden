@@ -11,8 +11,8 @@ export class FlowerVisualizer {
       window.innerWidth / 2 + (this.data.panning * window.innerWidth) / 2;
     this.ctx.translate(pixelOffset, pixelHeight);
     this.drawStem(10, pixelHeight);
-    this.drawHead();
     this.drawPetals();
+    this.drawHead();
     this.ctx.translate(-1 * pixelOffset, -1 * pixelHeight);
   }
   drawStem(stemWidth, flowerHeight) {

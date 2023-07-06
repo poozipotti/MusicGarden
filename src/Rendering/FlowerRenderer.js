@@ -1,6 +1,7 @@
 import { Flower } from "../Flower";
 import { AudioRenderer } from "./AudioRenderer";
 import { VisualRenderer } from "./VisualRenderer";
+const FLOWER_EVENT_BEATS_NEEDED = 64;
 export class FlowerRenderer {
   constructor() {
     this.flowers = {};
@@ -8,7 +9,9 @@ export class FlowerRenderer {
     this.canvasContext = flowerCanvas.getContext("2d");
     this.audioRenderer = new AudioRenderer();
     this.visualRenderer = new VisualRenderer(this.canvasContext);
+    this.count = 0;
     window.setInterval(() => {
+      this.flowerEvent();
       this.audioRenderer.render(this.getFlowers());
     }, AudioRenderer.MSPB / 16); // we want to run the beat loop on 16 notes
     window.setInterval(() => {
@@ -16,9 +19,37 @@ export class FlowerRenderer {
     }, 16);
     this.visualRenderer.render(this.getFlowers());
   }
+  flowerEvent() {
+    if (this.count === FLOWER_EVENT_BEATS_NEEDED) {
+      this.count = 0;
+      if (Math.random() < 0.5) {
+        const [bucket, index] = this.getRandomFlowerIndex();
+        this.removeFlowerAt(bucket, index);
+        this.addFlower();
+      } else if (Math.random() < 0.2) {
+        this.addFlower();
+      } else if (Math.random < 0.5) {
+        this.removeFlowerAt(...this.getRandomFlowerIndex(), index);
+      }
+    }
+    this.count++;
+  }
+  getRandomFlowerIndex() {
+    const flowerBuckets = Object.entries(this.flowers).filter(
+      ([, flowers]) => flowers?.length > 0
+    );
+    if (flowerBuckets.length === 0) return -1;
+    const bucketIndex = Math.floor(Math.random() * flowerBuckets.length);
+    const flowerIndex = Math.floor(
+      Math.random() * flowerBuckets[bucketIndex].length
+    );
+    return [bucketIndex, flowerIndex];
+  }
   addFlower(canOverwrite = true) {
-    console.log(AudioRenderer.AudioContext)
-    const tempFlower = new Flower(this.canvasContext, AudioRenderer.AudioContext);
+    const tempFlower = new Flower(
+      this.canvasContext,
+      AudioRenderer.AudioContext
+    );
     const MAX_SIMILIAR_FLOWERS_LOWS = 2;
     const MAX_SIMILIAR_FLOWERS_HIGHS = 3;
     const BUCKETS = 8;
@@ -47,6 +78,17 @@ export class FlowerRenderer {
       (allFLowers, flowerBucket) => [...allFLowers, ...flowerBucket],
       []
     );
+  }
+  removeFlowerAt(bucket, index) {
+    if (!this.flowers[bucket] || this.flowers[bucket].length < index) {
+      console.warn(
+        `no flowers in bucket ${bucket} at index ${index} found ${this.flowers[bucket]}`
+      );
+      return;
+    } else {
+      this.flowers[bucket][index].destroy();
+      this.flowers[bucket].splice(index, 1);
+    }
   }
 
   resetFlowers() {
