@@ -22,14 +22,14 @@ export class FlowerRenderer {
   flowerEvent() {
     if (this.count === FLOWER_EVENT_BEATS_NEEDED) {
       this.count = 0;
-      if (Math.random() < 0.5) {
-        const [bucket, index] = this.getRandomFlowerIndex();
-        this.removeFlowerAt(bucket, index);
-        this.addFlower();
-      } else if (Math.random() < 0.2) {
-        this.addFlower();
-      } else if (Math.random < 0.5) {
-        this.removeFlowerAt(...this.getRandomFlowerIndex(), index);
+      for (let i = 4; i--; i == 0) {
+        if (Math.random() < 0.5 && this.getFlowers().length > 1) {
+          const [bucket, index] = this.getRandomFlowerIndex();
+          this.removeFlowerAt(bucket, index);
+        }
+        if (Math.random() < 0.2) {
+          this.addFlower();
+        }
       }
     }
     this.count++;
@@ -82,7 +82,7 @@ export class FlowerRenderer {
   removeFlowerAt(bucket, index) {
     if (!this.flowers[bucket] || this.flowers[bucket].length < index) {
       console.warn(
-        `no flowers in bucket ${bucket} at index ${index} found ${this.flowers[bucket]}`
+        `no flowers in bucket ${bucket} at index ${index} found bucket ${this.flowers[bucket]}`
       );
       return;
     } else {

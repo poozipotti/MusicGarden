@@ -29,7 +29,7 @@ export class FlowerAudio {
           ? Math.floor(this.data.petalWidth / 10)
           : Math.floor(Math.random() * 4);
       this.filter.frequency.setTargetAtTime(
-        400,
+        10 * (100 - this.data.petalWidth),
         this.audioCtx.currentTime,
         speed
       );
