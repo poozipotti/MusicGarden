@@ -16,6 +16,7 @@ export class Flower {
     this.audio = new FlowerAudio(audioCtx, this.data, this.state);
   }
   beatUpdate() {
+    const MAX_BEATS = Math.floor(FLOWER_BEATS / this.data.petalCount);
     if (this.state.receivedBeats === 0) {
       this.audio.playCurrentNote();
     }
@@ -26,10 +27,7 @@ export class Flower {
       this.audio.stopCurrentNote();
     }
     this.state.receivedBeats += 1;
-    if (
-      this.state.receivedBeats ===
-      Math.floor(FLOWER_BEATS / this.data.petalCount)
-    ) {
+    if (this.state.receivedBeats === MAX_BEATS) {
       this.state.receivedBeats = 0;
       this.state.currentStep =
         (this.state.currentStep + 1) % this.data.petalCount;

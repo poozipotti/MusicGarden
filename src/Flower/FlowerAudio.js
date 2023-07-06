@@ -3,10 +3,6 @@ export class FlowerAudio {
     this.state = state;
     this.data = data;
     this.audioCtx = audioCtx;
-    this.filter = new BiquadFilterNode(this.audioCtx, {
-      frequency: 400,
-      q: 300,
-    });
     this.amount = Math.random() < 0.5 ? 0.5 : 1;
   }
   destroy() {
@@ -19,6 +15,19 @@ export class FlowerAudio {
         type: "sawtooth",
         frequency: flowerNote.frequency,
       });
+      this.filter = new BiquadFilterNode(this.audioCtx, {
+        frequency: 200,
+        Q: 1,
+      });
+      const speed =
+        this.data.petalCount < 16
+          ? Math.floor(this.data.petalWidth / 10)
+          : Math.floor(Math.random() * 4);
+      this.filter.frequency.setTargetAtTime(
+        1000,
+        this.audioCtx.currentTime,
+        speed
+      );
       this.oscillator.connect(this.filter).connect(this.audioCtx.destination);
       this.oscillator.start();
       this.state.isPlaying = true;

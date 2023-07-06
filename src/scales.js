@@ -57,7 +57,6 @@ class Scale {
         )}`
       );
     }
-    console.log(note, octave);
     return new Note(note, octave);
   }
 }
@@ -78,4 +77,7 @@ export const Japanese = (startingNote) => {
 //CDFG
 export const Fun = (startingNote) => {
   return new Scale([0,2,5,7], startingNote);
+};
+export const Triad = (startingNote) => {
+  return new Scale([0,4,7], startingNote);
 };
