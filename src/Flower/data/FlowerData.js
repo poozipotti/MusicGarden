@@ -51,7 +51,7 @@ export class FlowerData {
       stemHeight: Math.floor(Math.random() * constants.STEM_MINMAX[1]),
       petalCurve: Math.random() * constants.PETAL_CURVE_MINMAX[1],
       petalWidth: Math.random() * constants.PETAL_WIDTH_MINMAX[1] + 20,
-      petalHeight: Math.random() * constants.PETAL_HEIGHT_MINMAX + 100,
+      petalHeight: Math.random() * constants.PETAL_HEIGHT_MINMAX[1] + 100,
       petalColor: [
         Math.floor(Math.random() * 255),
         Math.floor(Math.random() * 255),
@@ -62,11 +62,8 @@ export class FlowerData {
           Math.floor(Math.random() * constants.PETAL_COUNTS.length)
         ],
       headScalePattern: [0] /*unusued for now*/,
-      scale: constants.SCALES[Math.random() * constants.SCALES.length],
-      petalOffset: clamp(
-        Math.random() * constants.PETAL_OFFSET_MINMAX,
-        constants.PETAL_OFFSET_MINMAX
-      ),
+      scale: constants.SCALES[0],
+      petalOffset: Math.random() * constants.PETAL_OFFSET_MINMAX[1],
       waveType:
         constants.WAVE_TYPES[
           Math.floor(constants.WAVE_TYPES.length * Math.random())

@@ -5,11 +5,10 @@ window.onload = function () {
   init();
 };
 function init() {
-  const listener = (window.onclick = () => {
+  (window.onclick = () => {
     console.log("clicked");
     if (!flowerRenderer) {
       startCanvas();
-      hasInit = true;
     } else {
       flowerRenderer.resetFlowers();
       const count = Math.floor(Math.random() * 5) + 1;

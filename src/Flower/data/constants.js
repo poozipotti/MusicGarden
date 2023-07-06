@@ -1,4 +1,4 @@
-import * as Scales from "../scales.js";
+import * as Scales from "./scales";
 /* clamps flower values and is used in random generation */
 export const STEM_MINMAX = [0, 12];
 export const PETAL_CURVE_MINMAX = [0, 1];

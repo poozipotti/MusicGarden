@@ -1,4 +1,4 @@
-import { PETAL_OFFSET_CLAMP, WAVE_TYPES } from "./FlowerData";
+import { PETAL_OFFSET_MINMAX, WAVE_TYPES } from "./data/constants";
 export class FlowerVisualizer {
   constructor(ctx, data, state) {
     this.state = state;
@@ -9,7 +9,6 @@ export class FlowerVisualizer {
     const pixelHeight = window.innerHeight - (this.data.stemHeight * 70 + 100);
     const pixelOffset =
       window.innerWidth / 2 + (this.data.panning * window.innerWidth) / 2;
-    console.log(this.data.panning)
     this.ctx.translate(pixelOffset, pixelHeight);
     this.drawStem(10, pixelHeight);
     this.drawHead();
@@ -28,7 +27,7 @@ export class FlowerVisualizer {
   drawPetals() {
     var TO_RADIANS = Math.PI / 180;
     const offset =
-      TO_RADIANS * ((360 / PETAL_OFFSET_CLAMP[1]) * this.data.petalOffset);
+      TO_RADIANS * ((360 / PETAL_OFFSET_MINMAX[1]) * this.data.petalOffset);
     this.ctx.rotate(offset);
 
     for (var j = 0; j < this.data.petalCount; j++) {

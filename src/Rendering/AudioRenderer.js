@@ -1,24 +1,18 @@
 export class AudioRenderer {
-  constructor(getFlowers) {
+  static BPM = 120
+  static MSPB = 60000 / AudioRenderer.BPM
+  constructor() {
     this.count = 0;
-    const BPM = 120;
-    this.getFlowers = getFlowers;
-    //milliseconds per beat
-    const MSPB = 60000 / BPM;
-    window.setInterval(() => {
-      render(flowers);
-    }, MSPB / 16); // we want to run the beat loop on 16 notes
-    //
   }
 
-  render() {
+  render(flowers) {
     this.count++;
     if (this.count == 32) {
       this.count = 0;
     }
 
     //plays audio based on state
-    this.getFlowers().forEach((flower) => {
+    flowers.forEach((flower) => {
       flower.beatUpdate();
     });
   }

@@ -1,15 +1,10 @@
 export class VisualRenderer {
-  constructor(ctx, getFlowers) {
+  constructor(ctx) {
     this.ctx = ctx;
-    this.getFlowers = getFlowers;
-    window.setInterval(() => {
-      render();
-    }, 16);
-    render();
   }
-  render() {
+  render(flowers) {
     this.clearCanvas();
-    this.getFlowers().forEach((flower) => {
+    flowers.forEach((flower) => {
       flower.visualizer.draw();
     });
   }

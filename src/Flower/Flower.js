@@ -1,6 +1,6 @@
-import { FlowerData } from "./FlowerData.js";
+import { FlowerData } from "./data/FlowerData.js";
 import { FlowerVisualizer } from "./FlowerVisualizer";
-import { FlowerStateData } from "./FlowerStateData.js";
+import { FlowerStateData } from "./data/FlowerStateData.js";
 import { FlowerAudio } from "./FlowerAudio.js";
 
 //how many BEATS are in a flower before it resets?
@@ -8,6 +8,7 @@ const FLOWER_BEATS = 16 * 8; //four bars
 
 export class Flower {
   constructor(ctx, audioCtx) {
+
     this.state = new FlowerStateData();
     this.data = FlowerData.RandomFlowerData();
     this.visualizer = new FlowerVisualizer(ctx, this.data, this.state);
